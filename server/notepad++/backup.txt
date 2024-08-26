@@ -1,0 +1,11 @@
+Để sử dụng script này với cronjob:
+
+   Lưu script này thành một file có tên .sh (ví dụ: backup_mongodb.sh).
+   Cấp quyền thực thi cho script: chmod +x backup_mongodb.sh
+   Thêm cronjob để chạy script định kỳ:
+   Mở file crontab: crontab -e.
+   Thêm dòng sau vào crontab, thay đổi * * * * * bằng tần suất bạn muốn backup (ví dụ: mỗi ngày lúc 0:00):
+   0 0 * * * /path/to/backup_mongodb.sh
+Lưu crontab và khởi động lại cronjob nếu cần thiết.
+
+9 15 * * * /home/tuanvu17/Document/Proj/specimen/notepad++/backup_mongodb.sh

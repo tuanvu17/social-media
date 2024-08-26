@@ -1,0 +1,72 @@
+// tk Mongodb on Cloud
+	- mongosh
+	- use mySocialMedia
+// xem người dùng tên database cụ thể có tên database là mySocialMedia:
+	- use mySocialMedia
+	- db.getUsers()
+  
+
+// Xem tất cả người dùng:
+	- db.system.users.find();
+
+// Xóa người dùng: (Nếu tạo người dùng trong database cụ thể thì)
+   - use mydatabase
+   - db.getUsers()
+   - db.dropUser("myUser");
+
+// Nếu đã bật xác thực thì phải xác thực admin :
+  - mongosh
+  - use admin
+	- db.auth('admin@a', 'admin@a');
+
+
+-- Bước 1: tài tài khoản admin;
+db.createUser({
+  user: "admin@a",
+  pwd: "admin@a",
+  roles: [
+    { role: "userAdminAnyDatabase", db: "admin" }
+  ]
+})
+
+-- Bước 2: Xác thực tài khoản admin
+db.auth('admin@a', 'admin@a');
+
+// xem tất cả các user
+db.system.users.find();
+
+-- Bước 2.1: 
+   Tạo database: 
+   use mySocialMedia
+
+-- Bước 3: Tạo tài khoản người dùng với database cụ thể, và cấp quyền cho nó
+db.createUser({
+  user: "user",
+  pwd: "abc123!$",
+  roles: [
+    { role: "readWrite", db: "mySocialMedia" }
+  ]
+})
+
+-- Bước 4: xác thực người dùng
+db.auth('user', 'abc123!$');
+
+-- Bước 5: Bật tính năng xác thực trên mongoodb
+	- sudo nano /etc/mongod.conf
+
+	-> Tìm đến dòng: security: authorization : enabled
+
+	- sudo service mongod restart
+
+-- Bước 6: Dùng tài khoản admin ở bước 1 để truy cập vào mongodb trên giao diện Mongodb Compass. 
+
+-- Bước 7: Dùng tài khoản user ở bước 3 kết nối tới database trên Mongodb Compass để xem database cụ thể.
+
+-- Kết nối trên Nodejs dung tk user đã tạo.
+
+-- Chú ý cấp lại quyền cho user  bước 3 =>> chư thử =>> Xóa user, tạo lại new user như cũ
+
+
+
+
+
